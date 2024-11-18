@@ -22,3 +22,83 @@ class Solution {
         return neg ? (int) -ans : (int) ans;
     }
 }
+/////////////////////////////2024/11/18仍然有bug待解决
+class Solution {
+    public int myAtoi(String s) {
+        int n=s.length();
+        int ptr=0;
+        if(n==0)
+        {
+        	return 0;
+        }
+        while(s.charAt(ptr)==' ')
+        {
+        	ptr++;
+        }
+        if(ptr==n)
+        {
+        	return 0;
+        }
+        if(s.charAt(ptr)=='-')
+        {
+        	ptr++;
+        	if(ptr==n||s.charAt(ptr)<'0'||s.charAt(ptr)>'9')
+        	{
+        		return 0;
+        	}
+        	while(ptr<n&&s.charAt(ptr)=='0')
+        	{
+        		ptr++;
+        	}
+//        	if(ptr==n)
+//        	{
+//        		return 0;
+//        	}
+        	long num=0;
+        	while(ptr<n&&s.charAt(ptr)!='0')
+        	{
+        		num*=10;
+        		num+=s.charAt(ptr)-'0';
+        		ptr++;
+        	}
+        	num*=(-1);
+        	if(num<Integer.MIN_VALUE)
+        	{
+        		return Integer.MIN_VALUE;
+        	}
+        	else
+        	{
+        		return (int)num;
+        	}
+        }
+        else
+        {      
+        	
+        	if(s.charAt(ptr)=='+')
+        	{
+        		ptr++;
+        		if(ptr==n||s.charAt(ptr)<'0'||s.charAt(ptr)>'9')
+            	{
+            		return 0;
+            	} 
+        		while(s.charAt(ptr)=='0')
+        		{
+        			ptr++;
+        		}
+        		if(ptr==n)
+        		{
+        			return 0;
+        		}
+        		int num=0;
+        		while(ptr<n&&s.charAt(ptr)>='0'&&s.charAt(ptr)<='9')
+        		{
+        			num*=10;
+        			num+=s.charAt(ptr)-'0';
+        			ptr++;
+        		}
+        		return (int)num;
+        	}
+        }
+        return 0;
+    }
+}
