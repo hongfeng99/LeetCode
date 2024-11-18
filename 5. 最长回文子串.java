@@ -1,3 +1,4 @@
+//以下是质朴且笨拙的方法
 class Solution {
     public String longestPalindrome(String s) {
         int n=s.length();
@@ -43,4 +44,54 @@ class Solution {
         return s.substring(begin, end);
     }
    
+}
+//以下是递归的方法
+
+class Solution {
+    public String longestPalindrome(String s) {
+        int n=s.length();
+        if(n==0)
+        {
+        	return new String();
+        }
+        Boolean [][]dp=new Boolean[n][n];
+        int maxLen=1;
+        int begin=0;
+        int end=0;
+        for(Boolean a[]:dp)
+        {
+        	for(int i=0;i<n;i++)
+        	{
+        		a[i]=false;
+        	}
+        }
+        for(int i=0;i<n;i++)
+        {
+        	dp[i][i]=true;
+        }
+        for(int i=0;i<n-1;i++)
+        {
+        	dp[i][i+1]=s.charAt(i)==s.charAt(i+1);
+        	if(dp[i][i+1]==true&&maxLen==1)
+        	{
+        		maxLen=2;
+        		begin=i;
+        		end=i+1;
+        	}
+        }
+        for(int i=n-3;i>=0;i--)
+        {
+        	for(int j=i+2;j<n;j++)
+        	{
+        		dp[i][j]=(s.charAt(i)==s.charAt(j)&&dp[i+1][j-1]);
+        		if(j-i+1>maxLen&&dp[i][j]==true)
+        		{
+        			maxLen=j-i;
+        			begin=i;
+        			end=j;
+        		}
+        	}
+        }
+        return s.substring(begin,end+1);
+    }
 }
