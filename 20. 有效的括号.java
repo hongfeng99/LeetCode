@@ -37,3 +37,37 @@ class Solution {
         return false;
     }
 }
+///////////////////哈希表颠倒的做法，更为简洁
+import java.util.Map;
+
+class Solution {
+    public boolean isValid(String s) {
+        int n=s.length();
+        if(n%2==1)
+        {
+        	return false;
+        }
+        Stack<Character>stack=new Stack<>();
+        int p=0;
+        Map<Character,Character>map=new HashMap<>();
+        map.put('[', ']');
+        map.put('{', '}');
+        map.put('(', ')');
+        while(p<n)
+        {
+        	if(map.containsKey(s.charAt(p)))
+        	{
+        		stack.push(s.charAt(p));
+        	}
+        	else
+        	{
+        		if(stack.isEmpty()||map.get(stack.pop())!=s.charAt(p))
+        		{
+        			return false;
+        		}
+        	}
+        	p++;
+        }
+        return stack.isEmpty();
+    }
+}
