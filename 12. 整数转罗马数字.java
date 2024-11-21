@@ -58,3 +58,79 @@ class Solution {
         return ans.toString();
     }
 }
+/////////////////////////一种更快的方法，枚举
+
+
+class Solution {
+    public String intToRoman(int num) {
+        StringBuilder a=new StringBuilder();        
+            while(num>=1000)
+            {
+                a.append('M');
+                num-=1000;
+            }
+            while(num>=900)
+            {
+                a.append("CM");
+                num-=900;
+            }        
+             while(num>=500)
+            {
+                a.append('D');
+                num-=500;
+            }
+            while(num>=400)
+            {
+                a.append("CD");
+                num-=400;
+            }            
+             while(num>=100)
+            {
+                a.append('C');
+                num-=100;
+            }
+            while(num>=90)
+            {
+                a.append("XC");
+                num-=90;
+            } 
+
+             while(num>=50)
+            {
+                a.append('L');
+                num-=50;
+            }
+             while(num>=40)
+            {
+                a.append("XL");
+                num-=40;
+            }
+             while(num>=10)
+            {
+                a.append('X');
+                num-=10;
+            }
+            while(num>=9)
+            {
+                a.append("IX");
+                num-=9;
+            }            
+             while(num>=5)
+            {
+                a.append('V');
+                num-=5;
+            }
+            while(num>=4)
+            {
+                a.append("IV");
+                num-=4;
+            }
+            while(num>=1)
+            {
+                a.append('I');
+                num-=1;
+            }            
+            return a.toString();
+                                                                        
+    }
+}
