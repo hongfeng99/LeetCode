@@ -28,3 +28,25 @@ class Solution {
         }
     }
 }
+///////////////////////////更为简洁的写法
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int n=nums.length;
+        if(n==0)
+        {
+        	return 0;
+        }
+        int low=1;
+        int high=1;
+        while(high<n)
+        {
+        	if(nums[high]!=nums[high-1])
+        	{
+        		nums[low]=nums[high];
+        		low++;
+        	}
+        	high++;
+        }
+        return low;
+    }
+}
