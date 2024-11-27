@@ -68,3 +68,63 @@ class Solution {
         return ans;
     }
 }
+/////////////////////////改良版（有点小错误）
+import java.util.List;
+import java.util.Map;
+
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        int n=s.length();
+        int k=words.length;
+        int len=words[0].length();
+        List<Integer> ans=new ArrayList<>();
+        if(n<k*len)
+        {
+        	return ans;
+        }
+
+        Map<String,Integer> map0=new HashMap<>();
+        for(int i=0;i<k;i++)
+        {
+        	map0.put(words[i],map0.getOrDefault(words[i], 0)+1);
+        }
+        //最外层,窗口的起点有len个
+        for(int i=0;i<len;i++)
+        {
+        	Map<String,Integer> map=new HashMap<>();
+        	for(int j=0;j<k&&i+len+j*len<=n;j++)
+        	{
+        		String res=s.substring(i+j*len,i+len+j*len);
+        		map.put(res, map.getOrDefault(res, 0)+1);
+        	}
+        	if(test(words,map0,map)==true)
+        	{
+        		ans.add(i);
+        	}
+        	for(int j=k;i+(j+1)*len<=n;j++)
+        	{
+        		String newword=s.substring(i+j*len,i+(j+1)*len);
+        		map.put(newword, map.getOrDefault(newword, 0)+1);
+        		String oldword=s.substring(i+(j-k)*len,i+(j+1-k)*len);
+        		map.put(oldword, map.get(oldword)-1);
+        		if(test(words,map0,map)==true)
+        		{
+        			ans.add(i+(j+1-k)*len);
+        		}
+        	}
+        }
+        return ans;
+    }
+    
+    public Boolean test(String[] words,Map<String,Integer> map0,Map<String,Integer> map)
+    {
+    	for(int i=0;i<words.length;i++)
+    	{
+    		if(map0.get(words[i])!=map.get(words[i]))
+    		{
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+}
