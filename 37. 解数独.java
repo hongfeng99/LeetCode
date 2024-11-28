@@ -58,3 +58,69 @@ class Solution {
         return ifchange;
     }
 }
+////////////////////正确版本
+class Solution {
+    public void solveSudoku(char[][] board) {
+        boolean[][] rowused=new boolean[9][10];
+        boolean[][] colused=new boolean[9][10];
+        boolean[][][] boxused=new boolean[3][3][10];
+        for(int i=0;i<9;i++)
+        {
+        	for(int j=0;j<9;j++)
+        	{
+        		char s=board[i][j];
+        		if(s-'0'>=1&&s-'0'<=9)
+        		{
+        			rowused[i][s-'0']=true;
+        			colused[j][s-'0']=true;
+        			boxused[i/3][j/3][s-'0']=true;
+        		}
+        	}
+        }
+        fun(board,rowused,colused,boxused,0,0);
+    }
+    
+    public boolean fun(char[][]board,boolean[][]rowused,boolean[][]colused,boolean[][][]boxused,int x,int y)
+    {
+    	if(y==board[0].length)
+    	{
+    		y=0;
+    		x++;
+    		if(x==board.length)
+    		{
+    			return true;
+    		}
+    	}
+    	char s=board[x][y];
+    	if(s=='.')
+    	{
+    		for(int i=1;i<=9;i++)
+        	{
+        		if(rowused[x][i]==false&&colused[y][i]==false&&boxused[x/3][y/3][i]==false)
+        		{
+        			board[x][y]=(char)(i+'0');
+        			rowused[x][i]=true;
+            		colused[y][i]=true;
+            		boxused[x/3][y/3][i]=true;
+	        		if(fun(board,rowused,colused,boxused,x,y+1)==true)
+	        		{
+	        			return true;
+	        		}
+	        		else
+	        		{
+	        			board[x][y]='.';
+		        		rowused[x][i]=false;
+		        		colused[y][i]=false;
+		        		boxused[x/3][y/3][i]=false;	
+	        		}
+	        		
+        		}
+        	}	
+    	}
+    	else
+    	{
+    		return fun(board,rowused,colused,boxused,x,y+1);
+    	}
+    	return false;
+    }
+}
