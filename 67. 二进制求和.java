@@ -48,3 +48,26 @@ class Solution {
         return res.toString();
     }
 }
+////////////更巧妙的写法
+class Solution {
+    public String addBinary(String a, String b) {
+        int carry = 0;
+        StringBuffer sb = new StringBuffer();
+        int n1 = a.length();
+        int n2 = b.length();
+        int n = Math.max(n1, n2);
+        int i = 0;
+        while (i < n) {
+            carry += (i < n1) ? (a.charAt(n1 - 1 - i) - '0') : 0;
+            carry += (i < n2) ? (b.charAt(n2 - 1 - i) - '0') : 0;
+            sb.append((char) (carry % 2 + '0'));
+            carry /= 2;
+            i++;
+        }
+        if (carry > 0) {
+            sb.append('1');
+        }
+        sb.reverse();
+        return sb.toString();
+    }
+}
