@@ -14,7 +14,7 @@ class Solution {
         	{
         		set.add(s.charAt(j));
         		j++;
-                if(set.contains(s.charAt(j)))
+                if(j<n&&set.contains(s.charAt(j)))
                 {
                     break;
                 }
