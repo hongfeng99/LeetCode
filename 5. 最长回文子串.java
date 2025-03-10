@@ -95,3 +95,66 @@ class Solution {
         return s.substring(begin,end+1);
     }
 }
+
+//2025年3月10日
+class Solution {
+    public String longestPalindrome(String s) {
+        int n=s.length();
+        if(n==0)
+        {
+        	return new String();
+        }
+        Boolean [][]dp=new Boolean[n][n];
+        int maxLen=1;
+        int begin=0;
+        int end=0;
+        for(Boolean a[]:dp)
+        {
+        	for(int i=0;i<n;i++)
+        	{
+        		a[i]=false;
+        	}
+        }
+        for(int i=0;i<n;i++)
+        {
+        	dp[i][i]=true;
+        }
+        for(int i=0;i<n-1;i++)
+        {
+        	dp[i][i+1]=s.charAt(i)==s.charAt(i+1);
+        	if(dp[i][i+1]==true&&maxLen==1)
+        	{
+        		maxLen=2;
+        		begin=i;
+        		end=i+1;
+        	}
+        }
+//        for(int i=n-3;i>=0;i--)
+//        {
+//        	for(int j=i+2;j<n;j++)
+//        	{
+//        		dp[i][j]=(s.charAt(i)==s.charAt(j)&&dp[i+1][j-1]);
+//        		if(j-i+1>maxLen&&dp[i][j]==true)
+//        		{
+//        			maxLen=j-i;
+//        			begin=i;
+//        			end=j;
+//        		}
+//        	}
+//        }
+        for(int i=2;i<n;i++)
+        {
+        	for(int j=i-2;j>=0;j--)
+        	{
+        		dp[j][i]=(s.charAt(i)==s.charAt(j)&&dp[j+1][i-1]);
+        		if(i-j+1>maxLen&&dp[j][i]==true)
+        		{
+        			maxLen=i-j+1;
+        			begin=j;
+        			end=i;
+        		}
+        	}
+        }
+        return s.substring(begin,end+1);
+    }
+}
