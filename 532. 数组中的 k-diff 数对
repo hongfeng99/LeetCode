@@ -1,0 +1,55 @@
+import java.util.Arrays;
+import java.util.Map;
+
+class Solution {
+    public int findPairs(int[] nums, int k) {
+        int n=nums.length;
+        Map<Integer,Integer> map=new HashMap<Integer,Integer>();
+        for(int i=0;i<n;i++)
+        {
+        	map.put(nums[i], map.getOrDefault(nums[i], 0)+1);
+        }
+        int ans=0;        
+        Arrays.sort(nums);
+        int ptr=0;
+        if(k==0)
+        {
+        	while(ptr<n)
+        	{
+        		while(ptr+1<n&&nums[ptr]==nums[ptr+1])
+        		{
+        			ptr++;
+        		}
+        		if(map.get(nums[ptr])>1)
+        		{
+        			ans++;
+//        			map.remove(nums[ptr]);
+        		}
+        		ptr++;
+        	}
+        }
+        while(ptr<n)
+        {
+        	if(map.containsKey(nums[ptr]+k)||map.containsKey(nums[ptr]-k))
+        	{
+//        		int count=1;
+        		while(ptr+1<n&&nums[ptr]==nums[ptr+1])
+        		{
+        			ptr++;
+//        			count++;
+        		}
+        		if(map.containsKey(nums[ptr]+k))
+            	{
+            		ans++;
+            	}
+            	if(map.containsKey(nums[ptr]-k))
+            	{
+            		ans++;
+            	}	
+        		map.remove(nums[ptr]);
+        	}
+        	ptr++;
+        }
+        return ans;
+    }
+}
