@@ -1,0 +1,142 @@
+class Solution {
+    public String complexNumberMultiply(String num1, String num2) {
+        int m=num1.length();
+        int n=num2.length();
+        //分别记录()a+()b或者()a-()b中的三个符号
+        char num11;
+        char num12;
+        char num13;
+        char num21;
+        char num22;
+        char num23;
+        int real1=0;
+        int real2=0;
+        int vir1=0;
+        int vir2=0;
+        int ptr1=0;
+        int ptr2=0;
+        int finalreal=0;
+        int finalvir=0;
+        char x=num1.charAt(0);
+        char y=num2.charAt(0);
+        if(x=='-')
+        {
+        	num11='-';
+        	ptr1++;        	
+        }
+        else
+        {
+        	num11='+';
+        }
+        while(num1.charAt(ptr1)!='+'&&num1.charAt(ptr1)!='-')
+    	{
+        	real1*=10;
+        	real1+=num1.charAt(ptr1)-'0';
+    		ptr1++;  //此时的ptr1指向中间的加号或者减号
+    	}
+        ptr1++;
+        if(num1.charAt(ptr1)=='-')
+        {
+        	num13='-';
+        	ptr1++;
+        }
+        else
+        {
+        	num13='+';
+        }
+        while(num1.charAt(ptr1)!='i')
+        {
+        	vir1*=10;
+        	vir1+=num1.charAt(ptr1)-'0';
+        	ptr1++;
+        }
+        
+        
+        if(y=='-')
+        {
+        	num21='-';
+        	ptr2++;
+        }
+        else
+        {
+        	num21='+';
+        }
+        while(num2.charAt(ptr2)!='+'&&num2.charAt(ptr2)!='-')
+        {
+         	real2*=10;
+        	real2+=num2.charAt(ptr2)-'0';
+        	ptr2++; //此时的ptr2指向中间的加号或者减号
+        }
+        ptr2++;
+        if(num2.charAt(ptr2)=='-')
+        {
+        	num23='-';
+        	ptr2++;
+        }
+        else
+        {
+        	num23='+';
+        }
+        while(num2.charAt(ptr2)!='i')
+        {
+        	vir2*=10;
+        	vir2+=num2.charAt(ptr2)-'0';
+        	ptr2++;
+        }
+        
+        if(num11==num21)
+        {
+        	finalreal+=real1*real2;
+        }
+        else
+        {
+        	finalreal-=real1*real2;
+        }
+        if(num13==num23)
+        {
+        	finalreal-=vir1*vir2;
+        }
+        else
+        {
+        	finalreal+=vir1*vir2;
+        }
+        //以上处理完实部
+        //以下处理虚部
+        if(num11==num23)
+        {
+        	finalvir+=real1*vir2;
+        }
+        else
+        {
+        	finalvir-=real1*vir2;
+        }
+        if(num13==num21)
+        {
+        	finalvir+=vir1*real2;
+        }
+        else
+        {
+        	finalvir-=vir1*real2;
+        }
+        StringBuffer ans=new StringBuffer();
+        if(finalreal<0)
+        {
+        	ans.append('-');
+        	finalreal*=(-1);
+        }
+        ans.append(Integer.toString(finalreal));
+        ans.append('+');
+        if(finalvir<0)
+        {
+        	ans.append('-');
+        	finalvir*=(-1);
+        }
+        ans.append(Integer.toString(finalvir));
+        ans.append('i');
+        return ans.toString();
+    }
+}
+
+
+//(1+3i)(2-4i)
+//(1-3i)(2+4i)
