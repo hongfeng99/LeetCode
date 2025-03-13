@@ -1,0 +1,51 @@
+class Solution {
+    public int nextGreaterElement(int n) {
+    	StringBuffer s=new StringBuffer();
+    	int k=n;
+    	while(k!=0)
+    	{
+    		int t=k%10;
+    		s.append(t);
+    		k/=10;
+    	}
+    	s.reverse();
+    	int m=s.length();
+    	if(m==1)
+    	{
+    		return -1;
+    	}
+    	int end=m-2;
+    	while(end>=0&&s.charAt(end)-'0'>=s.charAt(end+1)-'0')
+    	{
+    		end--;
+    	}
+    	if(end==-1)
+    	{
+    		return -1;
+    	}
+    	StringBuffer res=new StringBuffer();
+    	for(int i=0;i<end;i++)
+    	{
+    		res.append(s.charAt(i));
+    	}
+    	int high=m-1;
+    	while(high>=0&&s.charAt(high)-'0'<=s.charAt(end)-'0')
+    	{
+    		high--;
+    	}
+    	res.append(s.charAt(high));
+    	for(int i=m-1;i>high;i--)
+    	{
+    		res.append(s.charAt(i));
+    	}
+    	res.append(s.charAt(end));
+    	for(int i=high-1;i>end;i--)
+    	{
+    		res.append(s.charAt(i));
+    	}
+    	return Long.parseLong(res.toString())>=1&&Long.parseLong(res.toString())<=Integer.MAX_VALUE?Integer.parseInt(res.toString()):-1;
+    }
+}
+// 651322164321
+// 9526595
+// //849198 4（end） 765(high) 4321
