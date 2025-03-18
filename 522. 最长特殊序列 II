@@ -1,0 +1,90 @@
+class Solution {
+    public int findLUSlength(String[] strs) {
+        int n=strs.length;
+        int ans=-1;
+        boolean []dp=new boolean[n];
+        for(int i=0;i<n-1;i++)
+        {
+        	for(int j=i+1;j<n;j++)
+        	{
+        		if(func(strs[i],strs[j])==1)
+        		{
+        			dp[i]=true;
+        		}
+        		if(func(strs[i],strs[j])==2)
+        		{
+        			dp[j]=true;
+        		}
+        		if(func(strs[i],strs[j])==4)
+        		{
+        			dp[i]=true;
+        			dp[j]=true;
+        		}        		
+        	}
+        }
+        for(int i=0;i<n;i++)
+        {
+        	if(dp[i]==false)
+        	{
+        		ans=Math.max(strs[i].length(), ans);
+        	}
+        }
+        return ans;
+    }
+    //如果a出现在b中，返回1，如果b出现在a中，返回2，如果互不出现返回3，互相出现返回4
+    public static int func(String a, String b)
+    {
+    	int m=a.length();
+    	int n=b.length();
+    	int begin1=0;
+    	int begin2=0;
+    	if(m<n)
+    	{
+    		for(int i=0;i<n;i++)
+			{
+				if(begin1<m&&b.charAt(i)==a.charAt(begin1))
+				{
+					begin1++;
+				}
+			}
+    		if(begin1==m)
+    		{
+    			return 1;
+    		}
+    		else
+    		{
+    			return 3; //a与b互相不出现
+    		}
+    	}
+    	if(n<m)
+    	{
+    		for(int i=0;i<m;i++)
+			{
+				if(begin2<n&&a.charAt(i)==b.charAt(begin2))
+				{
+					begin2++;
+				}
+			}
+    		if(begin2==n)
+    		{
+    			return 2;
+    		}
+    		else
+    		{
+    			return 3;
+    		}
+    	}
+    	else
+    	{
+    		while(begin1<m&&a.charAt(begin1)==b.charAt(begin1))
+			{
+				begin1++;
+			}
+    		if(begin1==m)
+    		{
+    			return 4;
+    		}
+    	}
+    	return -1;
+    }
+}
